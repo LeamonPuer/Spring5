@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+    <!--<bean id="person" class="Test.Person">-->
+    <!--    <property name="name" value="john"/>-->
+    <!--    <property name="id" value="1"/>-->
+    <!--</bean>-->
+    <!--<bean id="person" class="Test.Person">-->
+    <!--    <constructor-arg name="name" value="john"/>-->
+    <!--    <constructor-arg name="id" value="1"></constructor-arg>-->
+    <!--</bean>-->
+    <!--    <bean name="person" class="Test.Person" p:name="john" p:id="1"/>-->
+    <!--    <bean id="userService" class="Test.UserService">-->
+    <!--        <property name="userDao" ref="userDaoImpl"/>-->
+    <!--    </bean>-->
+<!--    <bean id="userDaoImpl" class="Test.UserDaoImpl"/>-->
+<!--    <bean id="userService" class="Test.UserService">-->
+<!--        <property name="userDao">-->
+<!--            <bean class="Test.UserDaoImpl"/>-->
+<!--        </property>-->
+<!--    </bean>-->
+    <!--    <bean name="person" class="Test.Person">-->
+    <!--        <property name="name" value="john"/>-->
+    <!--        <property name="id" value="1"/>-->
+    <!--        <property name="pet">-->
+    <!--            <bean class="Test.Animals" p:name="小黄">-->
+    <!--                <property name="species" value="Dog"/>-->
+    <!--            </bean>-->
+    <!--        </property>-->
+    <!--    </bean>-->
+    <bean id="person" class="Test.Person">
+        <property name="name" value="john"/>
+        <property name="id" value="1"/>
+        <property name="pet" ref="animals"/>
+        <property name="pet.name" value="小白"/>
+        <property name="pet.species" value="Dog"/>
+    </bean>
+    <bean id="animals" class="Test.Animals" p:name="小黄">
+        <property name="species" value="Dog"/>
+    </bean>
+
+    <bean id="stu" class="Test.Stu">
+        <property name="courses">
+            <array>
+                <value>javaSE</value>
+                <value>数据结构</value>
+            </array>
+        </property>
+        <property name="list">
+            <list>
+                <value>张三</value>
+                <value>李四</value>
+            </list>
+        </property>
+        <property name="maps">
+        <map>
+            <entry key="name" value="java"/>
+            <entry key="price" value="15"/>
+        </map>
+        </property>
+        <property name="sets">
+            <set>
+                <value>JDBC</value>
+                <value>MySQL</value>
+            </set>
+        </property>
+    </bean>
+    <util:list id="books">
+        <value>Java从入门到精通</value>
+        <value>数据结构</value>
+    </util:list>
+    <bean id="book" class="Test.Book" scope="prototype">
+        <property name="list" ref="books"/>
+    </bean>
+</beans>

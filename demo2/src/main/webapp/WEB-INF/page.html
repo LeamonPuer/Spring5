@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" th:src="@{../static/vue.js}"></script>
+    <script type="text/javascript" th:src="@{../static/axios.min.js}"></script>
+    <script type="text/javascript">
+        window.onload=function (){
+            var vue=new Vue({
+                el:"#tab",
+                methods:{
+                    del:function (event){
+                        var form = document.getElementById("form");
+                        form.action=event.target.href;
+                        alert(form.action);
+                        form.submit();
+                        event.preventDefault();
+                    }
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+<table id="tab">
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>email</th>
+        <th>salary</th>
+        <th>deptId</th>
+        <th>operation</th>
+    </tr>
+    <tr th:each="emp:${page.list}">
+        <td th:text="${emp.id}"></td>
+        <td th:text="${emp.empName}"></td>
+        <td th:text="${emp.email}"></td>
+        <td th:text="${emp.salary}"></td>
+        <td th:text="${emp.deptId}"></td>
+        <td>
+            <a th:href="@{/page/}+${emp.id}" @click="del">delete</a>
+            <a th:href="@{/page/}+${emp.id}">upDate</a>
+        </td>
+    </tr>
+    <tr>
+        <th colspan="6">
+           <span th:if="${page.hasPreviousPage}">
+               <a th:href="@{/page/1}">first</a>
+               <a th:href="@{/page/}+${page.prePage}">last</a>
+           </span>
+            <span th:each="num:${page.navigatepageNums}">
+                <a th:if="${page.pageNum==num}"
+                   th:href="@{/page/}+${num}" th:text="'['+${num}+']'" style="color:
+            red;"></a>
+                <a th:if="${page.pageNum!=num}"
+                   th:href="@{/page/}+${num}" th:text="${num} "></a>
+           </span>
+            <span th:if="${page.hasNextPage}">
+                <a th:href="@{/page/}+${page.nextPage}">next</a>
+                <a th:href="@{/page/}+${page.pages}">trailer</a>
+            </span>
+        </th>
+    </tr>
+    <tr>
+        <th colspan="6">
+            <input type="button" value="add"/>
+        </th>
+    </tr>
+</table>
+<form id="form" method="post">
+    <input type="hidden" name="_method" value="delete">
+</form>
+</body>
+</html>
